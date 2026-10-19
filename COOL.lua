@@ -1,8 +1,6 @@
 -- Script is under maintenance.
 -- Please wait.
 
-print("SCRIPT IS UNDER MAINTENANCE")
-
 local StarterGui = game:GetService("StarterGui")
 
 local success = false
@@ -14,3 +12,6 @@ while not success do
         task.wait(0.1)
     end
 end
+
+print("SCRIPT IS UNDER MAINTENANCE")
+print("WERE GONNA UPDATE THIS.")
