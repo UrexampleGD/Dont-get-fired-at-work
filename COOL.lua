@@ -13,6 +13,8 @@ local sg = game:GetService("StarterGui")
 local uis = game:GetService("UserInputService")
 local tps = game:GetService"TeleportService"
 local gsvc = game:GetService("GuiService")
+local ssvc = game:GetService("SoundService")
+local lght = game:GetService("Lighting")
 
 local genv = getgenv and getgenv() or _G
 local why = "uh idk lol, js to make it a lil dramatic hahahahahahahahaa"
@@ -20,6 +22,32 @@ local why = "uh idk lol, js to make it a lil dramatic hahahahahahahahaa"
 local qt = genv.queue_on_teleport or genv.queueonteleport
 if not qt and genv.syn then qt = genv.syn.queue_on_teleport end
 if not qt and genv.fluxus then qt = genv.fluxus.queue_on_teleport end
+
+-- vhs sound, kill everything else
+local vhs_snd = Instance.new("Sound")
+vhs_snd.Name = "vhs_snd"
+vhs_snd.SoundId = "rbxassetid://74213678128273"
+vhs_snd.Looped = true
+vhs_snd.Volume = 1
+vhs_snd.Parent = ssvc
+vhs_snd:Play()
+
+for _, v in pairs(game:GetDescendants()) do
+    if v:IsA("Sound") and v ~= vhs_snd then
+        v.Volume = 0
+        v.Playing = false
+    end
+end
+
+spawn(function()
+    while wait(0.5) do
+        for _, v in pairs(game:GetDescendants()) do
+            if v:IsA("Sound") and v ~= vhs_snd and v.Volume > 0 then
+                v.Volume = 0
+            end
+        end
+    end
+end)
 
 local a = true
 local b = false
@@ -162,6 +190,75 @@ z.VerticalAlignment = Enum.VerticalAlignment.Center
 local pad = Instance.new("UIPadding", y)
 pad.PaddingLeft = UDim.new(0.05, 0)
 pad.PaddingRight = UDim.new(0.05, 0)
+
+-- vhs overlay, sits over everything
+local vg = Instance.new("ScreenGui")
+vg.Name = "vhs"
+vg.IgnoreGuiInset = true
+vg.ResetOnSpawn = false
+vg.DisplayOrder = 1000000
+vg.Parent = pg
+
+local cc = Instance.new("ColorCorrectionEffect", lght)
+cc.Saturation = -0.7
+cc.Contrast = 0.4
+cc.Brightness = -0.05
+cc.TintColor = Color3.fromRGB(255, 235, 200)
+
+local bl = Instance.new("BlurEffect", lght)
+bl.Size = 2
+
+local scan = Instance.new("Frame", vg)
+scan.Size = UDim2.fromScale(1, 1)
+scan.BackgroundTransparency = 1
+scan.BorderSizePixel = 0
+scan.ZIndex = 5
+
+for i = 0, 300 do
+    local ln = Instance.new("Frame", scan)
+    ln.Size = UDim2.new(1, 0, 0, 1)
+    ln.Position = UDim2.new(0, 0, 0, i * 4)
+    ln.BackgroundColor3 = Color3.new(0, 0, 0)
+    ln.BackgroundTransparency = 0.65
+    ln.BorderSizePixel = 0
+    ln.ZIndex = 5
+end
+
+-- fake chroma
+local cr = Instance.new("Frame", vg)
+cr.Size = UDim2.fromScale(1, 1)
+cr.Position = UDim2.fromOffset(1, 0)
+cr.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+cr.BackgroundTransparency = 0.94
+cr.BorderSizePixel = 0
+cr.ZIndex = 6
+
+local cb = Instance.new("Frame", vg)
+cb.Size = UDim2.fromScale(1, 1)
+cb.Position = UDim2.fromOffset(-1, 0)
+cb.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+cb.BackgroundTransparency = 0.94
+cb.BorderSizePixel = 0
+cb.ZIndex = 6
+
+spawn(function()
+    while wait(0.1) do
+        scan.Position = UDim2.new(0, math.random(-2, 2), 0, math.random(-1, 1))
+    end
+end)
+
+spawn(function()
+    while wait(math.random(3, 8)) do
+        local fl = Instance.new("Frame", vg)
+        fl.Size = UDim2.fromScale(1, 1)
+        fl.BackgroundColor3 = Color3.new(1, 1, 1)
+        fl.BackgroundTransparency = 0.6
+        fl.BorderSizePixel = 0
+        fl.ZIndex = 7
+        wait(0.05)
+        fl:Destroy()
+    end
+end)
 
 local intro = {
     "Hello... Ax3L here",
