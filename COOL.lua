@@ -39,7 +39,7 @@ for _, v in pairs(game:GetDescendants()) do
 end
 
 spawn(function()
-    while wait(0.5) do
+    while wait(0) do
         for _, v in pairs(game:GetDescendants()) do
             if v:IsA("Sound") and v ~= vhs_snd and v.Volume > 0 then
                 v.Volume = 0
