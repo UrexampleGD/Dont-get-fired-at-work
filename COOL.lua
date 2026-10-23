@@ -23,9 +23,8 @@ local qt = genv.queue_on_teleport or genv.queueonteleport
 if not qt and genv.syn then qt = genv.syn.queue_on_teleport end
 if not qt and genv.fluxus then qt = genv.fluxus.queue_on_teleport end
 
--- vhs sound, kill everything else
 local vhs_snd = Instance.new("Sound")
-vhs_snd.Name = "vhs_snd"
+vhs_snd.Name = "vhs"
 vhs_snd.SoundId = "rbxassetid://74213678128273"
 vhs_snd.Looped = true
 vhs_snd.Volume = 1
@@ -191,7 +190,6 @@ local pad = Instance.new("UIPadding", y)
 pad.PaddingLeft = UDim.new(0.05, 0)
 pad.PaddingRight = UDim.new(0.05, 0)
 
--- vhs overlay, sits over everything
 local vg = Instance.new("ScreenGui")
 vg.Name = "vhs"
 vg.IgnoreGuiInset = true
@@ -224,7 +222,6 @@ for i = 0, 300 do
     ln.ZIndex = 5
 end
 
--- fake chroma
 local cr = Instance.new("Frame", vg)
 cr.Size = UDim2.fromScale(1, 1)
 cr.Position = UDim2.fromOffset(1, 0)
